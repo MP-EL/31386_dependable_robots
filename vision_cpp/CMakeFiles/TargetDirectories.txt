@@ -1,0 +1,3 @@
+/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp/CMakeFiles/rebuild_cache.dir
+/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp/CMakeFiles/edit_cache.dir
+/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp/CMakeFiles/vision_cpp.dir

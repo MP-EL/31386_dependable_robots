@@ -1,2 +1,4 @@
-/obj/
-obj/
+# Ignoring the GUI file
+regbot-gui/*
+## Ignoring all pdf files
+*.pdf
