@@ -1,4 +1,4 @@
-# Install script for directory: /home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp
+# Install script for directory: /home/mikkel/Desktop/31386_dependable_robots/vision_cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/mikkel/Desktop/31386_dependable_robots/vision_cpp/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -62,10 +62,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp"
+CMAKE_SOURCE_DIR = /home/mikkel/Desktop/31386_dependable_robots/vision_cpp
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp"
+CMAKE_BINARY_DIR = /home/mikkel/Desktop/31386_dependable_robots/vision_cpp
 
 # Include any dependencies generated for this target.
 include CMakeFiles/vision_cpp.dir/depend.make
@@ -76,49 +76,49 @@ include CMakeFiles/vision_cpp.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/vision_cpp.dir/flags.make
 
-CMakeFiles/vision_cpp.dir/vision_c.cpp.o: CMakeFiles/vision_cpp.dir/flags.make
-CMakeFiles/vision_cpp.dir/vision_c.cpp.o: vision_c.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/vision_cpp.dir/vision_c.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/vision_cpp.dir/vision_c.cpp.o -c "/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp/vision_c.cpp"
+CMakeFiles/vision_cpp.dir/src/vision.cpp.o: CMakeFiles/vision_cpp.dir/flags.make
+CMakeFiles/vision_cpp.dir/src/vision.cpp.o: src/vision.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mikkel/Desktop/31386_dependable_robots/vision_cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/vision_cpp.dir/src/vision.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/vision_cpp.dir/src/vision.cpp.o -c /home/mikkel/Desktop/31386_dependable_robots/vision_cpp/src/vision.cpp
 
-CMakeFiles/vision_cpp.dir/vision_c.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/vision_cpp.dir/vision_c.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp/vision_c.cpp" > CMakeFiles/vision_cpp.dir/vision_c.cpp.i
+CMakeFiles/vision_cpp.dir/src/vision.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/vision_cpp.dir/src/vision.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mikkel/Desktop/31386_dependable_robots/vision_cpp/src/vision.cpp > CMakeFiles/vision_cpp.dir/src/vision.cpp.i
 
-CMakeFiles/vision_cpp.dir/vision_c.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/vision_cpp.dir/vision_c.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp/vision_c.cpp" -o CMakeFiles/vision_cpp.dir/vision_c.cpp.s
+CMakeFiles/vision_cpp.dir/src/vision.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/vision_cpp.dir/src/vision.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mikkel/Desktop/31386_dependable_robots/vision_cpp/src/vision.cpp -o CMakeFiles/vision_cpp.dir/src/vision.cpp.s
 
 # Object files for target vision_cpp
 vision_cpp_OBJECTS = \
-"CMakeFiles/vision_cpp.dir/vision_c.cpp.o"
+"CMakeFiles/vision_cpp.dir/src/vision.cpp.o"
 
 # External object files for target vision_cpp
 vision_cpp_EXTERNAL_OBJECTS =
 
-vision_cpp: CMakeFiles/vision_cpp.dir/vision_c.cpp.o
-vision_cpp: CMakeFiles/vision_cpp.dir/build.make
-vision_cpp: /usr/local/lib/libopencv_gapi.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_highgui.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_ml.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_objdetect.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_photo.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_stitching.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_video.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_videoio.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_imgcodecs.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_dnn.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_calib3d.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_features2d.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_flann.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_imgproc.so.4.5.5
-vision_cpp: /usr/local/lib/libopencv_core.so.4.5.5
-vision_cpp: CMakeFiles/vision_cpp.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable vision_cpp"
+obj/vision_cpp: CMakeFiles/vision_cpp.dir/src/vision.cpp.o
+obj/vision_cpp: CMakeFiles/vision_cpp.dir/build.make
+obj/vision_cpp: /usr/local/lib/libopencv_gapi.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_highgui.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_ml.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_objdetect.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_photo.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_stitching.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_video.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_videoio.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_imgcodecs.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_dnn.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_calib3d.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_features2d.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_flann.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_imgproc.so.4.5.5
+obj/vision_cpp: /usr/local/lib/libopencv_core.so.4.5.5
+obj/vision_cpp: CMakeFiles/vision_cpp.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mikkel/Desktop/31386_dependable_robots/vision_cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable obj/vision_cpp"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/vision_cpp.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-CMakeFiles/vision_cpp.dir/build: vision_cpp
+CMakeFiles/vision_cpp.dir/build: obj/vision_cpp
 
 .PHONY : CMakeFiles/vision_cpp.dir/build
 
@@ -127,6 +127,6 @@ CMakeFiles/vision_cpp.dir/clean:
 .PHONY : CMakeFiles/vision_cpp.dir/clean
 
 CMakeFiles/vision_cpp.dir/depend:
-	cd "/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp" "/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp" "/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp" "/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp" "/home/viggo/Desktop/10. semester/31386_dependable_robots/vision_cpp/CMakeFiles/vision_cpp.dir/DependInfo.cmake" --color=$(COLOR)
+	cd /home/mikkel/Desktop/31386_dependable_robots/vision_cpp && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mikkel/Desktop/31386_dependable_robots/vision_cpp /home/mikkel/Desktop/31386_dependable_robots/vision_cpp /home/mikkel/Desktop/31386_dependable_robots/vision_cpp /home/mikkel/Desktop/31386_dependable_robots/vision_cpp /home/mikkel/Desktop/31386_dependable_robots/vision_cpp/CMakeFiles/vision_cpp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/vision_cpp.dir/depend
 
