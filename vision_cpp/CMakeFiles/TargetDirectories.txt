@@ -1,3 +1,0 @@
-/home/mikkel/Desktop/31386_dependable_robots/vision_cpp/CMakeFiles/rebuild_cache.dir
-/home/mikkel/Desktop/31386_dependable_robots/vision_cpp/CMakeFiles/edit_cache.dir
-/home/mikkel/Desktop/31386_dependable_robots/vision_cpp/CMakeFiles/vision_cpp.dir
