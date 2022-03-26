@@ -1,1 +1,1 @@
-cmake . && make && ./obj/vision_cpp
+cmake . && make && ./vision_cpp
