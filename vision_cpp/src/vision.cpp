@@ -27,6 +27,11 @@ bool inside_rect(double x,double y,double x1,double y1,double x2,double y2)
     }
 }
 
+bool right_size(double depth, int min_interval = 30, int max_interval = 45){
+    bool size = ((min_interval <= depth) && (depth <= max_interval));
+    return size;
+}
+
 
 int main(int argc, char** argv)
 {
@@ -48,7 +53,7 @@ int main(int argc, char** argv)
     //Get height and width of the picture
     int frame_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
     int frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
-    cout << "Width " << frame_width << "Height " << frame_height << "\n";
+    cout << "Width " << frame_width << "\n" << "Height " << frame_height << "\n";
 
     int x1 = int(frame_width * 0.35);
     int y1 = int(frame_height * 0.3);
@@ -57,6 +62,8 @@ int main(int argc, char** argv)
 
     Point start_point(x1, y1);
     Point end_point(x2, y2);
+
+    int radius_interval [] = { 30, 45};
 
 
     //Record a video
@@ -151,13 +158,26 @@ int main(int argc, char** argv)
                     rectangle(bgr_image, start_point, end_point, color, 2);
                     
                     bool inside = inside_rect(centers[i].x, centers[i].y, x1, y1, x2, y2);
-                    
+                    //cout << "Radius" << radius[i] << "\n";
                     if (inside == 0){
-                       
                         putText(bgr_image, "False", Point(frame_width -100 , 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
+                        //cout << right_size(depth_estimation(radius[i]))<< "\n";
+                        if (right_size(depth_estimation(radius[i]))) {
+                            putText(bgr_image, "True", Point(frame_width -100 , 100), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 0), 2, LINE_AA); 
+                        }
+                        else{
+                            putText(bgr_image, "False", Point(frame_width -100 , 100), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
+                        }
                     }
                     else if(inside == 1){
                         putText(bgr_image, "True", Point(frame_width -100, 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 0), 2, LINE_AA);
+                        cout << right_size(depth_estimation(radius[i])) << "\n";
+                        if (right_size(depth_estimation(radius[i]))) {
+                            putText(bgr_image, "True", Point(frame_width -100 , 100), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 0), 2, LINE_AA); 
+                        }
+                        else{
+                            putText(bgr_image, "False", Point(frame_width -100 , 100), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
+                        }
                     }
                     double estimated_length = depth_estimation(radius[i]);
                     putText(bgr_image, to_string(estimated_length), Point(50, 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(255, 0, 0), 2, LINE_AA);
@@ -167,7 +187,7 @@ int main(int argc, char** argv)
 
         }
         //Record a video of the output
-        //video.write(bgr_image);
+        video.write(bgr_image);
         imshow("img", bgr_image);
         if (waitKey(5) >= 0)
             break;
