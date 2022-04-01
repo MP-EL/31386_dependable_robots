@@ -2,6 +2,8 @@
 regbot-gui/*
 ## Ignoring all pdf files
 *.pdf
+## Ignoring all avi files
+*.avi
 ## ignore cmake files.. 
 vision_cpp/CMakeFiles/*
 vision_cpp/CMakeCache.txt

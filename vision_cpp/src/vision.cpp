@@ -17,7 +17,15 @@ double depth_estimation(double r) {
     return depth;
 }
 
-
+bool inside_rect(double x,double y,double x1,double y1,double x2,double y2)
+{
+    if((x > x1) && (x < x2) && (y > y1) && (y < y2)){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
 
 int main(int argc, char** argv)
@@ -29,14 +37,31 @@ int main(int argc, char** argv)
 
     Mat canny_output;
     Canny(src_gray, canny_output, thresh, thresh * 2);
-
-
+    
     Mat frame;
     Mat output;
     VideoCapture cap;
     int deviceID = 2;             // 0 = open default camera
     int apiID = CAP_ANY;
     cap.open(deviceID, apiID);
+
+    //Get height and width of the picture
+    int frame_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
+    int frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+    cout << "Width " << frame_width << "Height " << frame_height << "\n";
+
+    int x1 = int(frame_width * 0.35);
+    int y1 = int(frame_height * 0.3);
+    int x2 = int(frame_width * 0.65);
+    int y2 = int(frame_height * 0.5);
+
+    Point start_point(x1, y1);
+    Point end_point(x2, y2);
+
+
+    //Record a video
+    VideoWriter video("outcpp.avi", cv::VideoWriter::fourcc('M','J','P','G'), 60, Size(frame_width,frame_height));
+
     if (!cap.isOpened()) {
         cerr << "ERROR! Unable to open camera\n";
         return -1;
@@ -57,15 +82,7 @@ int main(int argc, char** argv)
 
             // the camera will be deinitialized automatically in VideoCapture destructor
 
-
-
-
-
-
             Mat bgr_image = frame.clone();
-
-
-
 
             Mat lab_image;
             cvtColor(bgr_image, lab_image, COLOR_BGR2Lab);
@@ -127,13 +144,21 @@ int main(int argc, char** argv)
 
             if (radius[i] > 15)
             {
-                cout << radius[i] << "\n";
                 if ((radius[i] != 0) && (c_num==0))
                 {
-
-                    cout << radius[i] << "\n";
                     Scalar color = Scalar(rng.uniform(0, 256), rng.uniform(0, 256), rng.uniform(0, 256));
                     circle(bgr_image, centers[i], (int)radius[i], color, 2);
+                    rectangle(bgr_image, start_point, end_point, color, 2);
+                    
+                    bool inside = inside_rect(centers[i].x, centers[i].y, x1, y1, x2, y2);
+                    
+                    if (inside == 0){
+                       
+                        putText(bgr_image, "False", Point(frame_width -100 , 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
+                    }
+                    else if(inside == 1){
+                        putText(bgr_image, "True", Point(frame_width -100, 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 0), 2, LINE_AA);
+                    }
                     double estimated_length = depth_estimation(radius[i]);
                     putText(bgr_image, to_string(estimated_length), Point(50, 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(255, 0, 0), 2, LINE_AA);
                     c_num+=1;
@@ -141,6 +166,8 @@ int main(int argc, char** argv)
             }
 
         }
+        //Record a video of the output
+        //video.write(bgr_image);
         imshow("img", bgr_image);
         if (waitKey(5) >= 0)
             break;
