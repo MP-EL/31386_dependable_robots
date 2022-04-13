@@ -505,138 +505,152 @@ bool UMission::mission1(int &state)
         vector<Point2f> centers(contours.size());
         vector<float> radius(contours.size());
 
-        for (size_t i = 0; i < contours.size(); i++)
+        if (contours.size() != 0)
         {
-            // printf("found a contour\n");
-            minEnclosingCircle(contours[i], centers[i], radius[i]);
-
-            if (radius[i] > 15)
+            for (size_t i = 0; i < contours.size(); i++)
             {
-                if ((radius[i] != 0) && (c_num == 0))
+                // printf("found a contour\n");
+                minEnclosingCircle(contours[i], centers[i], radius[i]);
+
+                if (radius[i] > 15)
                 {
-                    Scalar color = Scalar(rng.uniform(0, 256), rng.uniform(0, 256), rng.uniform(0, 256));
-                    circle(bgr_image, centers[i], (int)radius[i], color, 2);
-                    rectangle(bgr_image, start_point, end_point, color, 2);
-
-                    bool inside = inside_rect(centers[i].x, centers[i].y, left_x, 0, right_x, frame_height);
-                    // cout << "Radius" << radius[i] << "\n";
-                    if (inside == 0)
+                    if ((radius[i] != 0) && (c_num == 0))
                     {
-                        putText(bgr_image, "False", Point(frame_width - 100, 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
-                        // cout << right_size(depth_estimation(radius[i]))<< "\n";
-                        if (right_size(depth_estimation(radius[i])))
+                        Scalar color = Scalar(rng.uniform(0, 256), rng.uniform(0, 256), rng.uniform(0, 256));
+                        circle(bgr_image, centers[i], (int)radius[i], color, 2);
+                        rectangle(bgr_image, start_point, end_point, color, 2);
+
+                        bool inside = inside_rect(centers[i].x, centers[i].y, left_x, 0, right_x, frame_height);
+                        // cout << "Radius" << radius[i] << "\n";
+                        if (inside == 0)
                         {
-                            putText(bgr_image, "True", Point(frame_width - 100, 100), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 0), 2, LINE_AA);
+                            putText(bgr_image, "False", Point(frame_width - 100, 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
+                            // cout << right_size(depth_estimation(radius[i]))<< "\n";
+                            if (right_size(depth_estimation(radius[i])))
+                            {
+                                putText(bgr_image, "True", Point(frame_width - 100, 100), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 0), 2, LINE_AA);
+                            }
+                            else
+                            {
+                                putText(bgr_image, "False", Point(frame_width - 100, 100), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
+                            }
                         }
-                        else
+                        else if (inside == 1)
                         {
-                            putText(bgr_image, "False", Point(frame_width - 100, 100), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
+                            putText(bgr_image, "True", Point(frame_width - 100, 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 0), 2, LINE_AA);
+                            // cout << right_size(depth_estimation(radius[i])) << "\n";
+                            if (right_size(depth_estimation(radius[i])))
+                            {
+                                putText(bgr_image, "True", Point(frame_width - 100, 100), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 0), 2, LINE_AA);
+                            }
+                            else
+                            {
+                                putText(bgr_image, "False", Point(frame_width - 100, 100), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
+                            }
                         }
-                    }
-                    else if (inside == 1)
-                    {
-                        putText(bgr_image, "True", Point(frame_width - 100, 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 0), 2, LINE_AA);
-                        // cout << right_size(depth_estimation(radius[i])) << "\n";
-                        if (right_size(depth_estimation(radius[i])))
+                        double estimated_length = depth_estimation(radius[i]);
+                        putText(bgr_image, to_string(estimated_length), Point(50, 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(255, 0, 0), 2, LINE_AA);
+                        // putText(bgr_image, to_string(estimated_length), Point(50, 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(255, 0, 0), 2, LINE_AA);
+
+                        // //forward:
+                        // if((centers[i].x<right_x) && (centers[i].x>left_x) && (estimated_length>20)){
+                        //     snprintf(kør lige ud);
+                        // }//back:
+                        // else if((centers[i].x<right_x) && (centers[i].x>left_x) && (estimated_length<10)){
+                        //     snprintf(kør bagud);
+                        // }//right
+                        string file_type = ".png";
+                        if ((centers[i].x > right_x))
                         {
-                            putText(bgr_image, "True", Point(frame_width - 100, 100), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 0), 2, LINE_AA);
-                        }
-                        else
-                        {
-                            putText(bgr_image, "False", Point(frame_width - 100, 100), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
-                        }
-                    }
-                    double estimated_length = depth_estimation(radius[i]);
-                    putText(bgr_image, to_string(estimated_length), Point(50, 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(255, 0, 0), 2, LINE_AA);
-                    // putText(bgr_image, to_string(estimated_length), Point(50, 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(255, 0, 0), 2, LINE_AA);
 
-                    // //forward:
-                    // if((centers[i].x<right_x) && (centers[i].x>left_x) && (estimated_length>20)){
-                    //     snprintf(kør lige ud);
-                    // }//back:
-                    // else if((centers[i].x<right_x) && (centers[i].x>left_x) && (estimated_length<10)){
-                    //     snprintf(kør bagud);
-                    // }//right
-                    string file_type = ".png";
-                    if ((centers[i].x > right_x))
-                    {
+                            printf("Turn right");
+                            putText(bgr_image, "Turning right", Point(20, frame_height - 20), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
 
-                        printf("Turn right");
-                        putText(bgr_image, "Turning right", Point(100, frame_height - 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
-
-                        // bridge->send("vel=0.2, tr=0:turn=10");
-                        int line = 0;
-                        snprintf(lines[line++], MAX_LEN, "vel=0.2, tr=0: turn=-2,time=2");
-                        snprintf(lines[line++], MAX_LEN, "vel=0,event=2:dist=1");
-                        sendAndActivateSnippet(lines, line);
-                        // make sure event 2 is cleared
-                        bridge->event->isEventSet(2);
-
-                        // string p1 = "image_" + to_string(pic_id) + ".png";
-                        // cout << p1 << endl;
-                        // pic_id += 1;
-                        // imwrite(p1, bgr_image);
-                        state = 10;
-
-                    } // left
-                    else if ((centers[i].x < left_x))
-                    {
-
-                        printf("Turn left");
-                        putText(bgr_image, "Turning left", Point(100, frame_height - 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
-
-                        // bridge->send("vel=0.2, tr=0:turn=-10");
-                        int line = 0;
-                        snprintf(lines[line++], MAX_LEN, "vel=0.2, tr=0: turn=2,time=2");
-                        snprintf(lines[line++], MAX_LEN, "vel=0,event=2:dist=1");
-                        sendAndActivateSnippet(lines, line);
-                        // make sure event 2 is cleared
-                        bridge->event->isEventSet(2);
-                        // make sure event 2 is cleared
-                        // printf("before isevent2\n");
-                        // bridge->event->isEventSet(2);
-                        // printf("after isevent2\n");
-
-                        // string p1 = "image_" + to_string(pic_id) + ".png";
-                        // cout << p1 << endl;
-                        // pic_id += 1;
-                        // imwrite(p1, bgr_image);
-                        state = 10;
-                    }
-                    else if ((centers[i].x < right_x) && (centers[i].x > left_x))
-                    {
-
-                        printf("I am within x and y 8)");
-                        putText(bgr_image, "Ball within bounds", Point(100, frame_height - 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
-
-                        // string p1 = "image_" + to_string(pic_id) + ".png";
-                        // cout << p1 << endl;
-                        // pic_id += 1;
-                        // imwrite(p1, bgr_image);
-                        if ((inside) && (estimated_length < 40))
-                        {
-                            state = 999;
-                        }
-                        else if ((inside) && (estimated_length > 40))
-                        {
+                            // bridge->send("vel=0.2, tr=0:turn=10");
                             int line = 0;
-                            snprintf(lines[line++], MAX_LEN, "vel=0.2, acc=0.2 :dist=0.05");
+                            snprintf(lines[line++], MAX_LEN, "vel=0.2, tr=0: turn=-2,time=2");
                             snprintf(lines[line++], MAX_LEN, "vel=0,event=2:dist=1");
                             sendAndActivateSnippet(lines, line);
                             // make sure event 2 is cleared
                             bridge->event->isEventSet(2);
-                        }
-                        else
+
+                            // string p1 = "image_" + to_string(pic_id) + ".png";
+                            // cout << p1 << endl;
+                            // pic_id += 1;
+                            // imwrite(p1, bgr_image);
+                            state = 10;
+
+                        } // left
+                        else if ((centers[i].x < left_x))
                         {
+
+                            printf("Turn left");
+                            putText(bgr_image, "Turning left", Point(20, frame_height - 20), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
+
+                            // bridge->send("vel=0.2, tr=0:turn=-10");
+                            int line = 0;
+                            snprintf(lines[line++], MAX_LEN, "vel=0.2, tr=0: turn=2,time=2");
+                            snprintf(lines[line++], MAX_LEN, "vel=0,event=2:dist=1");
+                            sendAndActivateSnippet(lines, line);
+                            // make sure event 2 is cleared
+                            bridge->event->isEventSet(2);
+                            // make sure event 2 is cleared
+                            // printf("before isevent2\n");
+                            // bridge->event->isEventSet(2);
+                            // printf("after isevent2\n");
+
+                            // string p1 = "image_" + to_string(pic_id) + ".png";
+                            // cout << p1 << endl;
+                            // pic_id += 1;
+                            // imwrite(p1, bgr_image);
                             state = 10;
                         }
+                        else if ((centers[i].x < right_x) && (centers[i].x > left_x))
+                        {
+
+                            printf("I am within x and y 8)");
+                            putText(bgr_image, "Ball within bounds", Point(20, frame_height - 20), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
+
+                            // string p1 = "image_" + to_string(pic_id) + ".png";
+                            // cout << p1 << endl;
+                            // pic_id += 1;
+                            // imwrite(p1, bgr_image);
+                            if ((inside) && (estimated_length < 30))
+                            {
+                                state = 999;
+                            }
+                            else if ((inside) && (estimated_length > 30))
+                            {
+                                int line = 0;
+                                snprintf(lines[line++], MAX_LEN, "vel=0.2, acc=0.2 :dist=0.05");
+                                snprintf(lines[line++], MAX_LEN, "vel=0,event=2:dist=1");
+                                sendAndActivateSnippet(lines, line);
+                                // make sure event 2 is cleared
+                                bridge->event->isEventSet(2);
+                            }
+                            else
+                            {
+                                state = 10;
+                            }
+                        }
+                        c_num += 1;
                     }
-                    c_num += 1;
                 }
             }
-            // Record a video of the output
-            // video.write(bgr_image);
-            // imshow("img", bgr_image);
+        }
+        else // Det her er rimeligt dårligt lige nu :( Nogle gange fucker den lidt op 
+        {
+            printf("Searching for tennis ball");
+            putText(bgr_image, "Seaching for tennis ball", Point(20, frame_height - 20), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2, LINE_AA);
+
+            // bridge->send("vel=0.2, tr=0:turn=10");
+            int line = 0;
+            snprintf(lines[line++], MAX_LEN, "vel=0.2, tr=0: turn=-2,time=2");
+            snprintf(lines[line++], MAX_LEN, "vel=0,event=2:dist=1");
+            sendAndActivateSnippet(lines, line);
+            // make sure event 2 is cleared
+            bridge->event->isEventSet(2);
+            state = 10;
         }
         video.write(bgr_image);
         break;
